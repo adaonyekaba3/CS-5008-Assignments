@@ -1,1 +1,7 @@
 # Simply copy and paste the output from your terminal here!
+
+-bash-4.2$ ls
+ExternalResources  images  main.c  output.txt  README.md
+
+
+
