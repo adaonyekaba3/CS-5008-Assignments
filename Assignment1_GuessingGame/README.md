@@ -1,13 +1,13 @@
 # TODO Please edit the following information in your assignment
 
-- Name: *edit me*
-- How many hours did it take you to complete this assignment? *edit me*
-- Did you collaborate with any other students/TAs/Professors? *edit me*
+- Name: Adaobi Onyekaba
+- How many hours did it take you to complete this assignment? 8 hours
+- Did you collaborate with any other students/TAs/Professors? Yes worked w/ Theresa Todd.
 - Did you use any external resources? (Cite them below)
-  - *edit me*
-  - *edit me and add more rows if needed*
-- (Optional) What was your favorite part of the assignment? *edit me*
-- (Optional) How would you improve the assignment? *edit me*
+  - mostly used google and the textbook. 
+  - 
+- (Optional) What was your favorite part of the assignment? working with the TA to forumate a plan of approach to the assignment and noticing alot of similarities between programming in C and Python. 
+- (Optional) How would you improve the assignment? I would suggest doing examples in lab that are more similar to exercises that must be completed in the assignment. 
 
 # Logistics
 
