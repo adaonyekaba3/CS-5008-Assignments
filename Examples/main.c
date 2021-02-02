@@ -3,43 +3,54 @@
 #include <time.h>
 
 
-int main(){
+int main()
+{
 	int randomNumber = 0;  // System number is stored here.
-	int num = 0;
-	int i = 0;
+	int guess[5] = {0}; //keeps track of number of guesses. 
+ 	
+
+	//think of this like 5 containers for guesses stored here.	
 
 	printf("Welcome to Number Guessing Game !!!\n");
 	printf("\n\n");
 
-	srand(time(NULL));
-	randomNumber = (rand() % 10) + 1;
-	
-	printf("CPU says - Pick a number between 1-10:\n");
-	scanf("%d", &num);
-	printf("%d\n", num);  
-		
-	do 
+	for (int total_games = 0; total_games < 5; total_games++)
 	{
-
-	}while (randomNumber < num | randomNumber > num);
+		// this will generate a new number each game 
+		srand(time(NULL));
+		randomNumber = (rand() % 10) + 1; 
 	
+		// get user input 
+		printf("CPU says - Pick a number between 1-10:\n");
+		int num = 0; 
+	do
+	{
+		scanf("%d", &num);
+		printf("You guessed the number: %d \n", num);
+		printf("The correct number is: %d \n", randomNumber);	
+		
 		if (randomNumber < num)
 		{
-			printf("No guess higher! Make a guess:\n");
-			scanf("%d", &num);
-			printf("%d\n", num);
-		}
-		else if{
-			printf("No guess lower! Make a guess:\n");
-			scanf("%d", &num);
-			printf("%d\n", num);
-		}	
+			printf("No guess lower! Make guess:\n");              
+				guess[total_games]++;
 
-	else (randomNumber == num)
+		}                                                            
+                else if (randomNumber > num)
+		{                                                          
+                        printf("No guess higher! Make a guess:\n");
+		             	guess[total_games]++;
+		}
+	}
+	while (num != randomNumber);
+
+		printf("You got it! You won! \n");
+		printf("%d\n", randomNumber);
+
+	for (int games = 0; games < 5; games++)
 	{
-		printf("You got it! You won! The right number is: \n");
-		scanf("%d", &randomNumber);
-		printf("%d\n", randomNumber);	
+		printf("In game %d, it took you %d times\n", games, guess[games]); 		
 	}
 	return 0;
+}
+
 }
