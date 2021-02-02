@@ -6,7 +6,7 @@
 int main()
 {
 	int randomNumber = 0;  // System number is stored here.
-	int guess[5] = {0}; //keeps track of number of guesses. 
+	int guess[5] = {1}; //keeps track of number of guesses. 
  	
 
 	//think of this like 5 containers for guesses stored here.	
@@ -27,7 +27,6 @@ int main()
 	{
 		scanf("%d", &num);
 		printf("You guessed the number: %d \n", num);
-		printf("The correct number is: %d \n", randomNumber);	
 		
 		if (randomNumber < num)
 		{
@@ -46,11 +45,10 @@ int main()
 		printf("You got it! You won! \n");
 		printf("%d\n", randomNumber);
 
+	}
 	for (int games = 0; games < 5; games++)
 	{
 		printf("In game %d, it took you %d times\n", games, guess[games]); 		
 	}
 	return 0;
-}
-
 }
