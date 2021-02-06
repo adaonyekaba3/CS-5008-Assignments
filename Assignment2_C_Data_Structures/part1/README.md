@@ -34,8 +34,11 @@ Circular queues are used quite a bit in operating systems and high performance s
 
 # TODO: Put your answer here
 
-*My answer is  A ring buffer is useful for improving space efficiency to maintain a sliding or moving list of
-values/items in an ordered fashion. ring buffers are useful for in-memory logging/tracing, serial data streams imbedded systems like micrcontrollers. 
+A ring buffer is useful for:
+
+--Improving space efficiency to maintain a sliding or moving list of values/items in an ordered fashion. Ring buffers arealso  useful for in-memory logging/tracing and serial data streams for imbedded systems like microcontrollers. Ineffeciencies of memory management such as the inability to add elements a the front of a normal queue or in the case of ring buffers, when queues reach maximum capacity, its required to move the pointer counterclockwise to the beginning of the queue to achieve proper memory management. 
+
+Ring Buffers can be used for job scheduling conflicts where there is efficient management of memory for controlling  enqueuing and dequeuing in constant time complexities. In the case of I/O buffering, ring buffers are useful for data mining in an first-in-first out manner.
 
 
 # Unit Tests
