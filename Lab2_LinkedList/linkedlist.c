@@ -37,25 +37,38 @@ node_t* create_list(){
 	
 	return year2018;
 }
-
+// create print list function here. 
 void print_list(node_t* head){
-
+	
+	while ( node_t* != NULL){
+		printf("%d \n", node_t->head);
+	}
+	printf("\n");
 }
+
+// create free list function. 
+//void free_list(node_t* head){
+
+//}
 
 int main(){
 	node_t* redsox = NULL;
 	redsox = create_list();
+	print_list(redsox);
 
 	// iterate
 	// point to head of list -> redsox.
 	node_t* itr = redsox;
 	while( itr != NULL){
-	}
+
 		printf("wins in %d are %d\n", itr->years, itr-> wins);
 	
 		itr = itr->next;
+	}
 
 	// free our memory	
+//	free_list(redsox);
+	
 	return 0;
 }	  
  
