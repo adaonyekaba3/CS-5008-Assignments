@@ -35,10 +35,9 @@ For this assignment, our 'stack' library is quite small, so we will implement th
 
 We are going to talk about stacks quite a lot in this course, so it will be important to understand them. Do a little outside research, and edit this section of the readme answering specifically: Why is a stack useful and/or when should it be used?
 
-# TODO: Put your answer here
+# TODO: Put your answer here:
 
-*My answer is ...*
-
+--A stack is useful when you want to get things out in reverse order than how you put them in using pop operation. Stacks are also useful for processing function calls which are stacks that are used for compiler/operating system to store local variables used inside a function block, so that they can be discarded once the control comes out of the function block. Stack are also useful for recursive functions which return the values and addresses of the function which will be pushed into the stack and invoked function which will first return the value by popping the stack. Stacks should be used for processing nested structures or for functions that call other functions. 
 # Unit Tests
 
 A unit test is a standalone test that checks for the correctness of a specific use case in your code. In our case, we are testing if we have a working stack implementation. A sample unit tests is given:
