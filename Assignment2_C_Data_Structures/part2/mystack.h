@@ -34,7 +34,7 @@ typedef struct stack{
 	int count;		// count keeps track of how many items
 				// are in the stack.
 	unsigned int capacity;	// Stores the maximum size of our stack
-	struct node_t* head;		// head points to a node on the top of our stack.
+	struct node_t* head;	// head points to a node on the top of our stack.
 }stack_t;
 
 // Creates a stack
@@ -84,19 +84,36 @@ node_t* create_node(int data){
 node_t* new_node = (node_t*)malloc(sizeof(node_t));
 new_node->data = data;
 new_node->next = NULL;	
-}
+} 
 
 // Enqueue a new item
 // i.e. push a new item into our data structure
 // Returns a -1 if the operation fails (otherwise returns 0 on success).
 // (i.e. if the Stack is full that is an error, but does not crash the program).
-int stack_enqueue(stack_t* s, int new_item){
+int stack_enqueue(stack_t* s, int item){
 
+	// Check pointer Nullity
+	if (s == NULL){
+		return -1;
+	}
+	// Check if stack is full 
 	if (stack_full(s)){
 		return -1;
 	}
-		node_t* new_node = create_node(new_item);
-		return 0;
+	
+	node_t* newNode = create_node(item);
+	
+	// Check if new node was created successfully
+	if (newNode == NULL ){
+		return -1;
+	}
+	
+	newNode->next = s->head;
+	s->head = newNode;
+	s->count += 1;
+	
+
+	return 0;
 	
 }
 
@@ -107,13 +124,16 @@ int stack_enqueue(stack_t* s, int new_item){
 // Removing from an empty stack should crash the program, call exit(1).
 int stack_dequeue(stack_t* s){
 	if (stack_empty(s)){
+	
 		exit(1); // Note: This line should crash the program if stack empty.
 	}
 	else{
-		int val = s->head->data;
+		int x = s->data;
+		node_t* node = s->head;
 		s->head = s-> head->next;
-		s->count = s->count-1;
-		return val;
+		s->count -=1;
+		free(node);
+		return x;
 	}
 }
 
@@ -157,7 +177,8 @@ int main(){
 	struct node* head = NULL;
 	int size, element;
 	int counter = 0;
-	int myNode;	
+	char item; //no warning	
+
 	
 }
 
