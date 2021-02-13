@@ -25,16 +25,16 @@
 typedef struct node{
 	int data;
 	struct node* next;
-}node_t;
+ }node_t;
 
 // Create a stack data structure
 // Our stack holds a single pointer to a node, which
 // is a linked list of nodes.
 typedef struct stack{
 	int count;		// count keeps track of how many items
-				// are in the stack.
+	int data;				// are in the stack.
 	unsigned int capacity;	// Stores the maximum size of our stack
-	struct node_t* head;	// head points to a node on the top of our stack.
+	node_t* head;	// head points to a node on the top of our stack.
 }stack_t;
 
 // Creates a stack
@@ -84,6 +84,7 @@ node_t* create_node(int data){
 node_t* new_node = (node_t*)malloc(sizeof(node_t));
 new_node->data = data;
 new_node->next = NULL;	
+	return new_node;
 } 
 
 // Enqueue a new item
@@ -117,7 +118,7 @@ int stack_enqueue(stack_t* s, int item){
 	
 }
 
-/*
+
 // Dequeue an item
 // Returns the item at the front of the stack and
 // removes an item from the stack.
@@ -141,27 +142,29 @@ int stack_dequeue(stack_t* s){
 // Queries the current size of a stack
 // A stack that has not been previously created will crash the program.
 // (i.e. A NULL stack cannot return the size)
-//unsigned int stack_size(stack_t* s){
+unsigned int stack_size(stack_t* s){
 	
-//	if (s == NULL){
-//		exit(1);
-//	}
-//	else{
-//		return s->count;
-//	}
-//}
+	if (s == NULL){
+		exit(1);
+	}
+	else{
+		return s->count;
+	}
+}
 
 // Free stack
 // Removes a stack and ALL of its elements from memory.
 // This should be called before the proram terminates.
-//void free_stack(stack_t* s){
-//
-//	while (s->capacity != 1){
-//	}	
-//	stack_dequeue(s);
-//}
+void free_stack(stack_t* s){
 
-/*
+	while (s->capacity != 1){
+	
+	}
+
+	stack_dequeue(s);
+}
+
+
 // To output stack capacity.
 void print_stack(stack_t* s){
 	
@@ -169,17 +172,10 @@ void print_stack(stack_t* s){
 	if (s->count == 0){
 		printf("Stack is empty!\n");
 	}
-	return;
-}*/
+	return;	
 
-// main function here
-int main(){
-	struct node* head = NULL;
-	int size, element;
-	int counter = 0;
-	char item; //no warning	
-
-	
 }
 
 #endif
+
+
