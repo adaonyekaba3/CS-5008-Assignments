@@ -32,7 +32,7 @@ typedef struct node{
 // is a linked list of nodes.
 typedef struct stack{
 	int count;		// count keeps track of how many items
-	int data;				// are in the stack.
+				// are in the stack.
 	unsigned int capacity;	// Stores the maximum size of our stack
 	node_t* head;	// head points to a node on the top of our stack.
 }stack_t;
@@ -45,9 +45,19 @@ typedef struct stack{
 // Create a new node with value-data and next-Null.
 stack_t* create_stack(unsigned int capacity){	
 	stack_t* myStack = (stack_t*)malloc(sizeof(stack_t));
-	myStack ->capacity = MAX_DEPTH;
+	if ( myStack == NULL){
+		return NULL;
+	}
+	if (capacity > MAX_DEPTH){
+		myStack ->capacity = MAX_DEPTH;
+	}
+	else{
+		myStack->capacity = capacity;
+	}
 	myStack->count = 0;
 	myStack->head = NULL;
+	printf("At beginning of create_stack: %d \n");
+	printf("At end of creat_stack: %d \n");
 	return myStack;
 }
 
@@ -57,7 +67,7 @@ stack_t* create_stack(unsigned int capacity){
 // Returns 0 if false (the stack has at least one element enqueued)
 int stack_empty(stack_t* s){ 
 
-	if (s->count == s->capacity){
+	if (s->count == 0){
 		return 1; 
 	}
 	else{
@@ -129,7 +139,7 @@ int stack_dequeue(stack_t* s){
 		exit(1); // Note: This line should crash the program if stack empty.
 	}
 	else{
-		int x = s->data;
+		int x = s->head->data;
 		node_t* node = s->head;
 		s->head = s-> head->next;
 		s->count -=1;
@@ -156,12 +166,14 @@ unsigned int stack_size(stack_t* s){
 // Removes a stack and ALL of its elements from memory.
 // This should be called before the proram terminates.
 void free_stack(stack_t* s){
-
-	while (s->capacity != 1){
+	node_t* temp = s->head;
 	
+	while (temp != NULL){
+		s->head = s->head->next;
+		free(temp);
+		temp = s->head;
 	}
-
-	stack_dequeue(s);
+	free(s);	
 }
 
 
@@ -169,10 +181,11 @@ void free_stack(stack_t* s){
 void print_stack(stack_t* s){
 	
 	//if s->count =0, then stack is empty.
-	if (s->count == 0){
-		printf("Stack is empty!\n");
+	node_t* temp = s->head;
+	while (temp != NULL){
+		printf("%d \n", temp->data);
+		temp = temp->next;
 	}
-	return;	
 
 }
 
