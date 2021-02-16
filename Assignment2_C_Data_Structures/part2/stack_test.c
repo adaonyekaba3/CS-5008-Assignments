@@ -99,20 +99,30 @@ int unitTest4(int status){
 }
 
 int unitTest5(int status){
-    printf("=======Stack unitTest5=======\n");
+	printf("=======Stack unitTest5=======\n");
 
-    stack_t* test5 = create_stack(32);
-    free_stack(test5);
-
-    return 1;
+	stack_t* test5 = create_stack(32);
+	
+	free_stack(test5);
+	
+	return 1;
 }
 
+
+// TODO: Add tests here
+int (*unitTests[])(int)={
+	unitTest1, 
+	unitTest2, 
+	unitTest3, 
+	unitTest4, 
+	unitTest5, 
+	NULL
+};
 
 // ====================================================
 // ================== Program Entry ===================
 // ====================================================
 int main(){
-
     unsigned int testsPassed = 0;
 // List of Unit Tests to test your data structure
 	int counter =0;
