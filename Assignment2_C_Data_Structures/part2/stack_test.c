@@ -19,7 +19,7 @@
 // and provide the path to this file which is within
 // our current directory. 
 
-
+//MAX_DEPTH = 32;
 
 // A sample test of your program
 // You can add as many unit tests as you like
@@ -39,19 +39,20 @@ int unitTest1(int status){
 
 int unitTest2(int status){
     printf("=======Stack unitTest2=======\n");
-    stack_t* test1 = create_stack(MAX_DEPTH);
-    stack_enqueue(test1,1);
-    stack_enqueue(test1,2);
-    stack_enqueue(test1,3);
-    stack_enqueue(test1,4);
-    stack_enqueue(test1,5);
-    stack_enqueue(test1,6);
-    stack_enqueue(test1,7);
-    stack_enqueue(test1,8);
-    stack_enqueue(test1,9);
-    stack_enqueue(test1,10);
-
-    free_stack(test1);
+    stack_t* test2 = create_stack(MAX_DEPTH);
+    stack_enqueue(test2,1);
+    stack_enqueue(test2,2);
+    stack_enqueue(test2,3);
+    stack_enqueue(test2,4);
+    stack_enqueue(test2,5);
+    stack_enqueue(test2,6);
+    stack_enqueue(test2,7);
+    stack_enqueue(test2,8);
+    stack_enqueue(test2,9);
+    stack_enqueue(test2,10);
+    stack_enqueue(test2,11);
+    print_stack(test2)ea
+    free_stack(test2);
 
     return 1;
 }
@@ -124,14 +125,13 @@ int (*unitTests[])(int)={
 // ====================================================
 int main(){
     unsigned int testsPassed = 0;
-// List of Unit Tests to test your data structure
+// List of Unit Tests to test your data structure.
 	int counter =0;
         while(unitTests[counter]!=NULL){
-                 unitTests[counter](1);
+                  unitTests[counter](1);
                          counter++;
-                             }
-
-                                 return 0;
-                                 }
+        }
+        return 0;
+}
 
 
