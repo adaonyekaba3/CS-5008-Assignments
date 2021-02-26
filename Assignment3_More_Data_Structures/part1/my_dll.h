@@ -62,7 +62,7 @@ int dll_empty(dll_t* l){
 		return 0; 			// states FALSE if successful.
 	}
 	else{
-		return -1; 			// returns this cuz dll is empty. 
+		return -1; 			// returns this cuz dll is empty.
 	}
 }
 
@@ -72,7 +72,33 @@ int dll_empty(dll_t* l){
 // Returns -1 if DLL is NULL.
 // (i.e. the memory allocation for a new node failed).
 int dll_push_front(dll_t* l, int item){
+
+	// initializing inserting new node
+	printf("\npushing %d in back\n", item);
+
+	// 1. create a new node
+	node_t* newNode = (node_t*)malloc(sizeof(node_t));
+	if ( newNode == NULL ){
+		newNode->data = item;
+		newNode->next = NULL;
+		newNode->previous = NULL;
 		return -1;
+	}
+	else if (l->count == 0 )
+	{
+		// 2. MOVE the old head to the prev node
+		// to point to this node.
+		l->head = newNode; // 0(1)
+		return 1;		   // newNode created successfully.
+	}
+	else{
+		/* code */
+		newNode->next = l->head;
+		l->head->previous = newNode;
+		l->head = newNode;
+	}	
+		l->count++;
+		return 0;
 }
 
 // push a new item to the end of the DLL (after the last node in the list).
