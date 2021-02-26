@@ -27,7 +27,7 @@ typedef struct node{
 typedef struct DLL{
 	int count;		// count keeps track of how many items are in the DLL.
 	node_t* head;		// head points to the first node in our DLL.
-        node_t * tail;          //tail points to the last node in our DLL.
+    node_t * tail;          //tail points to the last node in our DLL.
 }dll_t;
 
 // Creates a DLL
@@ -38,9 +38,12 @@ typedef struct DLL{
 // Returns NULL if we could not allocate memory.
 dll_t* create_dll(){
 	// Modify the body of this function as needed.
-	dll_t* myDLL= NULL;	
+	dll_t* myDLL = (dll_t*)malloc(sizeof(dll_t));
+	myDLL->head = NULL; //new dll_t points to head
+	myDLL->tail = NULL; // then to tail
+	myDLL->count = 0; 	// then to count
 
-	return myDLL;
+	return myDLL; // returns newly created dll_t.
 }
 
 // DLL Empty
@@ -49,7 +52,18 @@ dll_t* create_dll(){
 // Returns 0 if false (the DLL has at least one element enqueued)
 // Returns -1 if the dll is NULL.
 int dll_empty(dll_t* l){
-	return -1;
+
+	if (l->count == 0){ // checks that dll is empty
+		return 1; 		// states TRUE
+	}
+	else if (l->count >= 1) // checks if 1 dll is created
+	{
+		/* code */
+		return 0; 			// states FALSE if successful.
+	}
+	else{
+		return -1; 			// returns this cuz dll is empty. 
+	}
 }
 
 // push a new item to the front of the DLL ( before the first node in the list).
