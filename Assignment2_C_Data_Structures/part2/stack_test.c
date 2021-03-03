@@ -51,7 +51,7 @@ int unitTest2(int status){
     stack_enqueue(test2,9);
     stack_enqueue(test2,10);
     stack_enqueue(test2,11);
-    print_stack(test2)ea
+    print_stack(test2);
     free_stack(test2);
 
     return 1;
@@ -78,7 +78,7 @@ int unitTest3(int status){
 int unitTest4(int status){
     printf("========stack unitTest4========\n");
     stack_t* test4 = create_stack(32);
-    
+
      int i =0;
      for(i=0; i < 32; i++){
        stack_enqueue(test4,1);
