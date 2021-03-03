@@ -367,27 +367,5 @@ void free_dll(dll_t* t){
 	free(t);	
 	
 }
-/*
-void populate_dll( dll_t* dll ){
-	
-	// print to populate dll with values 
-	printf("\npopulate dll with some entry values\n");
-	dll_push_front(dll, 9);
-	dll_push_front(dll, 8);
-	dll_push_front(dll, 7);
-	dll_push_back(dll, 15);
-	dll_push_back(dll, 16);
-	dll_push_back(dll, 17);
-}
 
-void print_dll( dll_t* dll ){
-	node_t* ptr;
-	ptr = dll->head;
-	
-	while ( ptr != NULL ){
-		printf("%d", ptr->data);
-		ptr = ptr->next;
-	}
-}
-*/
 #endif
