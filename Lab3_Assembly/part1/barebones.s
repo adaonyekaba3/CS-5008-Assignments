@@ -17,7 +17,7 @@ _barebones:
 
 								# (2) What is going on here
 								# Ans:
-	movq $1, %rax				# We are storing an integer value 1 to register rax
+	movq $1, %rax				# We are sto1ring an integer value 1 to register rax
 	movq $1, %rdi				# Then we are setting the destination index register
 	leaq .hello.str,%rsi		# to 1 to write std-out, then setting the source index
 								# register to the start of the string.
