@@ -29,7 +29,7 @@ typedef struct node{
 typedef struct DLL{
 	int count;		// count keeps track of how many items are in the DLL.
 	node_t* head;		// head points to the first node in our DLL.
-        node_t * tail;          //tail points to the last node in our DLL.
+    node_t * tail;          //tail points to the last node in our DLL.
 }dll_t;
 
 // Creates a DLL
@@ -40,12 +40,21 @@ typedef struct DLL{
 // Returns NULL if we could not allocate memory.
 dll_t* create_dll(){
 	// Modify the body of this function as needed.
+<<<<<<< HEAD
 	dll_t* myDLL = (dll_t*)malloc(sizeof(dll_t));	
 	myDLL->head = NULL; // node dll initializes nodeDLL->head->tail->NULL
 	myDLL->tail = NULL;
 	myDLL->count = 0;
 	
 	return myDLL;
+=======
+	dll_t* myDLL = (dll_t*)malloc(sizeof(dll_t));
+	myDLL->head = NULL; //new dll_t points to head
+	myDLL->tail = NULL; // then to tail
+	myDLL->count = 0; 	// then to count
+
+	return myDLL; // returns newly created dll_t.
+>>>>>>> 58073032229451b80c46a62c4716523df78250b4
 }
 
 // DLL Empty
@@ -54,6 +63,7 @@ dll_t* create_dll(){
 // Returns 0 if false (the DLL has at least one element enqueued)
 // Returns -1 if the dll is NULL.
 int dll_empty(dll_t* l){
+<<<<<<< HEAD
 	
 	// list is empty
 	if(l->count == 0){
@@ -63,6 +73,20 @@ int dll_empty(dll_t* l){
 		return 0;
 	}
 	return -1;
+=======
+
+	if (l->count == 0){ // checks that dll is empty
+		return 1; 		// states TRUE
+	}
+	else if (l->count >= 1) // checks if 1 dll is created
+	{
+		/* code */
+		return 0; 			// states FALSE if successful.
+	}
+	else{
+		return -1; 			// returns this cuz dll is empty.
+	}
+>>>>>>> 58073032229451b80c46a62c4716523df78250b4
 }
 
 // push a new item to the front of the DLL ( before the first node in the list).
@@ -71,6 +95,7 @@ int dll_empty(dll_t* l){
 // Returns -1 if DLL is NULL.
 // (i.e. the memory allocation for a new node failed).
 int dll_push_front(dll_t* l, int item){
+<<<<<<< HEAD
 	
 	if (l == NULL ){
 		return -1;
@@ -107,6 +132,35 @@ int dll_push_front(dll_t* l, int item){
 	// if pushfront returns on failure. 	
 	l->count++;
 	return 1;
+=======
+
+	// initializing inserting new node
+	printf("\npushing %d in back\n", item);
+
+	// 1. create a new node
+	node_t* newNode = (node_t*)malloc(sizeof(node_t));
+	if ( newNode == NULL ){
+		newNode->data = item;
+		newNode->next = NULL;
+		newNode->previous = NULL;
+		return -1;
+	}
+	else if (l->count == 0 )
+	{
+		// 2. MOVE the old head to the prev node
+		// to point to this node.
+		l->head = newNode; // 0(1)
+		return 1;		   // newNode created successfully.
+	}
+	else{
+		/* code */
+		newNode->next = l->head;
+		l->head->previous = newNode;
+		l->head = newNode;
+	}	
+		l->count++;
+		return 0;
+>>>>>>> 58073032229451b80c46a62c4716523df78250b4
 }
 
 // push a new item to the end of the DLL (after the last node in the list).

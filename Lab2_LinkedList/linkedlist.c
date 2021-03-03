@@ -62,13 +62,13 @@ int main(){
 	while( itr != NULL){
 
 		printf("wins in %d are %d\n", itr->years, itr-> wins);
-	
+
 		itr = itr->next;
 	}
 
-	// free our memory	
-//	free_list(redsox);
-	
+	// free our memory
+	free_list(redsox);
+
 	return 0;
-}	  
- 
+}
+
