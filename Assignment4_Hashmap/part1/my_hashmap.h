@@ -53,8 +53,6 @@ typedef struct hashmap{
     hashFunctionPointer hashFunction;
 }hashmap_t;
 
-// implicit declaration
-//static char *my_strcpy(const char *str);
 
 // Creates a new hashmap
 // Allocates memory for a new hashmap.
@@ -142,7 +140,7 @@ void hashmap_insert(hashmap_t* _hashmap,char* key,char* value){
    	}
 	// create new pair
 	// malloc space - check if malloc returns NULL 
-	pair_t *new_pair = (pair_t *)malloc(sizeof(pair_t));
+	pair_t *new_pair = (pair_t*)malloc(sizeof(pair_t));
 	
 	// pair_t consists of a key & value, so we also need
 	// to allocate memory that we are allocating for is based on
@@ -160,12 +158,10 @@ void hashmap_insert(hashmap_t* _hashmap,char* key,char* value){
 
 	if (new_pair->key == NULL){ // did this fail, if so exit!
 		exit(1);	
-	
+	}
 	// create a new node 
-   	node_t *new_node = (node_t*)malloc(sizeof(node_t));
-	//new_node->next = NULL;
-	//new_node->kv = new_pair;
-
+   	node_t* new_node = (node_t*)malloc(sizeof(node_t));
+	
 	if (new_node == NULL){ // new_node empty - space not malloc!
 		exit(1);
 	}
@@ -187,15 +183,7 @@ void hashmap_insert(hashmap_t* _hashmap,char* key,char* value){
 		}
 		iterator->next = new_node; // inserts the new node!
 	}
-}
-
-struct static char* my_strcpy(const char *str){
-	
-	// make new string 
-	char* new_str = (char*)malloc(strlen(str) * sizeof(char) + 1);
-	strcpy(new_str, str); // call my_strcpy
-		return new_str;
-	
+	return;
 }
 
 // Return a value from a key 
@@ -220,15 +208,12 @@ char* hashmap_getValue(hashmap_t* _hashmap, char* key){
 	while( iterator != NULL){
 		if (strcmp(iterator->kv->key, key) == 0){
 			iterator = iterator->next;
-			iterator->next = new_node;
 			return key;// key is found
 			
 		}
-		//iterator = iterator->next;
 	}
 	return 0;						
 }
-
 
 // Remove a key from a hashmap
 // The algorithm is:
@@ -250,7 +235,7 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 	while( iterator != 0 ){
 		if (strcmp(iterator->kv->key, key) == 0){
 				 	
-	// remove from bucket by freeing memory 
+		// remove from bucket by freeing memory 
 		}
 		iterator = iterator->next;
 	}
@@ -279,14 +264,13 @@ void hashmap_update(hashmap_t* _hashmap, char* key, char* newValue){
 	// seach the hashmap's bucket for the new key
 	while ( iterator != 0 ){
 		if ( strcmp(iterator->kv->key, key )){
-			return; // ask cat whether to return new value. 
+			return;  
 		}
-		iterator = iterator->next;// ask cat how to do iterator next 
+		iterator = iterator->next; 
 	}
 	// ask how to demonstrate update new value successfully 
-	free(key);
+	//free(key);
 }
-
 
 // Prints all of the keys in a hashmap
 // The algorithm is:
@@ -305,9 +289,10 @@ void hashmap_printKeys(hashmap_t* _hashmap){
 			printf("\tKey=%s\n", iterator->kv->key);
 			// Move our iterator in that particular bucket 
 			// forward one node until we reach the end of our chain.
-			iterator =  iterator->next;
+			iterator =  iterator->next;		
 		}
 	}
 }
+
 
 #endif
