@@ -14,7 +14,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-
+#include <stdio.h>
 
 // A key value pair
 // This is specifically for a (char*, char*) key value pair
@@ -35,10 +35,10 @@ typedef struct node{
 int stringHash(char* myKey, int numberOfBuckets){
     return strlen(myKey) % numberOfBuckets;
 }
-
+//
 // Create a function prototype to a function that takes
 // in a char* and an int.
-typedef int(*hashFunctionPointer)(char*,int) ; 
+typedef int(*hashFunctionPointer)(char*,int); 
 
 // Chained implementation of a hashmap
 typedef struct hashmap{
@@ -53,21 +53,28 @@ typedef struct hashmap{
     hashFunctionPointer hashFunction;
 }hashmap_t;
 
+// implicit declaration
+//static char *my_strcpy(const char *str);
+
 // Creates a new hashmap
 // Allocates memory for a new hashmap.
 // Initializes the capacity(i.e. number of buckets)
 hashmap_t* hashmap_create(unsigned int _buckets){
     // Allocate memory for our hashmap
-	//TODO
+    hashmap_t* myMap = (hashmap_t*)malloc(sizeof(hashmap_t));	
     // Set the number of buckets
-	//TODO
+    myMap->buckets = _buckets;
     // Initialize our array of lists for each bucket
-	//TODO
+    myMap->arrayOfLists = (node_t**)malloc(sizeof(node_t*)*_buckets);
     // Setup our hashFunction to point to our
     // stringHash function.
-	//TODO
+    // Iterate through all of our buckets and set to NULL.
+    for (int i=0; i < _buckets; i++){
+	myMap->arrayOfLists[i] = NULL; // ask CAT if this line is needed. 
+    }
+    myMap->hashFunction = stringHash;	
     // Return the new map that we have created
-    return NULL;
+    return myMap;
 }
 
 // Frees a hashmap
@@ -75,9 +82,15 @@ hashmap_t* hashmap_create(unsigned int _buckets){
 // Must also free all of the chains in the hashmap
 // This function should run in O(n) time
 void hashmap_delete(hashmap_t* _hashmap){
-    if(_hashmap != NULL){
-	//TODO
-    }
+  	
+	// initialize free hashmap and all elements of its memory.
+	if (_hashmap != NULL){ 
+		return;
+	}
+	// Free all memory used by the buckets.
+	// free the hashmap struct
+	free(_hashmap);
+
 }
 
 // Returns a boolean value if a key has been put into
@@ -90,9 +103,30 @@ void hashmap_delete(hashmap_t* _hashmap){
 //  - Search that bucket to see if the key exists.
 // This function should run in average-case constant time
 int hashmap_hasKey(hashmap_t* _hashmap, char* key){
-	//TODO
-}
 
+	// check if hashmap is empty 
+	if (_hashmap == NULL){
+		return -9999;
+	}
+	// if a key exists return 1
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+
+	node_t* iterator = _hashmap->arrayOfLists[bucket];
+
+	while( iterator != NULL){
+		// using str comparison strcmp 
+		// det if key is same/exists 
+		// compare keys identifier
+		if (strcmp(iterator->kv->key, key) == 0){ // 0 means found if both sides same
+			return 1; // if not return 0.
+		}
+		 
+	// if key does not exist return 0
+		iterator = iterator->next; // keys no match, so keep looking!  
+ 	}
+	return 0;// do not enter while loop on. 	
+}
+	
 // Insert a new key/value pair into a hashmap
 // The algorithm is:
 //  - If a key already exists, do not add it--return
@@ -101,21 +135,101 @@ int hashmap_hasKey(hashmap_t* _hashmap, char* key){
 //      - You should malloc the key/value in this function
 // This function should run in average-case constant time
 void hashmap_insert(hashmap_t* _hashmap,char* key,char* value){
-    // TODO
+	
+	// void returns nothing
+	if (hashmap_hasKey(_hashmap, key)){
+		return; // if hashkey returned 1, 116 T
+   	}
+	// create new pair
+	// malloc space - check if malloc returns NULL 
+	pair_t *new_pair = (pair_t *)malloc(sizeof(pair_t));
+	
+	// pair_t consists of a key & value, so we also need
+	// to allocate memory that we are allocating for is based on
+	// the string length of the 'key' and 'value' that were passed in
+	// from the function
+	new_pair->key = (char*)malloc(strlen(key) * sizeof(char)+1); // adding +1 for null terminator
+	new_pair->value = (char*)malloc(strlen(value) * sizeof(char)+1); // add +1 for null terminator	
+	// check that new_pair node is empty
+	if (new_pair == NULL){
+		exit(1); // NULL Check
+	}
+	// copy new string
+	strcpy(new_pair->key, key); // my_strcpy - helper function needed
+	strcpy(new_pair->value , value);	
+
+	if (new_pair->key == NULL){ // did this fail, if so exit!
+		exit(1);	
+	
+	// create a new node 
+   	node_t *new_node = (node_t*)malloc(sizeof(node_t));
+	//new_node->next = NULL;
+	//new_node->kv = new_pair;
+
+	if (new_node == NULL){ // new_node empty - space not malloc!
+		exit(1);
+	}
+	new_node->kv = new_pair;
+	new_node->next = NULL;
+	
+	// LOCATE THE BUCKET 
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+	
+	// ADD NEW NODE
+	node_t *iterator = _hashmap->arrayOfLists[bucket];
+	
+	if (iterator == NULL){
+		_hashmap->arrayOfLists[bucket] = new_node;
+	}
+	else{
+		while(iterator->next != NULL){
+			iterator=iterator->next;
+		}
+		iterator->next = new_node; // inserts the new node!
+	}
+}
+
+struct static char* my_strcpy(const char *str){
+	
+	// make new string 
+	char* new_str = (char*)malloc(strlen(str) * sizeof(char) + 1);
+	strcpy(new_str, str); // call my_strcpy
+		return new_str;
+	
 }
 
 // Return a value from a key 
 // Returns NULL if the key is not found
-// The algorithm is:
+// The algorithm is: hashkey
 //  - If the key does not exist, then--return NULL if not found.
 //  - Call the _hashmap's hash function on the key
 //  - Search the _hashmap's bucket for the key and return the value
 // This function should run in average-case constant time
 char* hashmap_getValue(hashmap_t* _hashmap, char* key){
-	//TODO
+		
+	// if key is not found in hashmap, return NULL
+	if (hashmap_hasKey(_hashmap, key) == 0){
+		return NULL;
+	}
+	// call the hashmap function on the key
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets); 
+ 	
+	node_t* iterator = _hashmap->arrayOfLists[bucket];
+	
+	// Search the _hashmap's bucket for the key and return the value
+	while( iterator != NULL){
+		if (strcmp(iterator->kv->key, key) == 0){
+			iterator = iterator->next;
+			iterator->next = new_node;
+			return key;// key is found
+			
+		}
+		//iterator = iterator->next;
+	}
+	return 0;						
 }
 
-// TODO NOTE THAT I DID NOT FINISH REMOVE KEY BECAUSE...
+
 // Remove a key from a hashmap
 // The algorithm is:
 //  - Determine if the key exists--return if it does not.
@@ -123,7 +237,24 @@ char* hashmap_getValue(hashmap_t* _hashmap, char* key){
 //  - Search the _hashmap's bucket for the key and then remove it
 // This function should run in average-case constant time
 void hashmap_removeKey(hashmap_t* _hashmap, char* key){
-	//TODO
+	// Determine if the key exists, return if yes
+	if (hashmap_hasKey(_hashmap, key)){
+		return;
+	}
+	// call the hashap function on the key
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+
+	node_t* iterator = _hashmap->arrayOfLists[bucket];
+	
+	// search the hashmap's bucket for the key, then remove it
+	while( iterator != 0 ){
+		if (strcmp(iterator->kv->key, key) == 0){
+				 	
+	// remove from bucket by freeing memory 
+		}
+		iterator = iterator->next;
+	}
+	free(key);	
 }
 
 // Update a key with a new Value
@@ -132,16 +263,51 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 //  - Call the _hashmap's hash function on the key
 //  - Updates the value of the key to the new value
 // This function should run in average-case constant time
+// ASK SONG AT 10AM HOW TO DRAFT THIS!!
 void hashmap_update(hashmap_t* _hashmap, char* key, char* newValue){
-	//TODO
+	
+	// Determine if key exists, then return
+	if (hashmap_hasKey(_hashmap, key)){
+		return;
+	}
+	// call the hashmap function on the key.
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+		
+	node_t* iterator = _hashmap->arrayOfLists[bucket];
+	
+	// update the value of the key to the new value.
+	// seach the hashmap's bucket for the new key
+	while ( iterator != 0 ){
+		if ( strcmp(iterator->kv->key, key )){
+			return; // ask cat whether to return new value. 
+		}
+		iterator = iterator->next;// ask cat how to do iterator next 
+	}
+	// ask how to demonstrate update new value successfully 
+	free(key);
 }
+
 
 // Prints all of the keys in a hashmap
 // The algorithm is:
 //  - Iterate through every bucket and print out the keys
 // This function should run in O(n) time
 void hashmap_printKeys(hashmap_t* _hashmap){
-	//TODO
+		
+	// iterate through all of our buckets.
+	for (int i=0; i < _hashmap->buckets; i++){
+		printf("\nBucket# %d\n", i);
+		// Iterate through all of the lists 
+		// starting at each bucket
+		node_t* iterator =  _hashmap->arrayOfLists[i];
+		while( iterator != NULL){
+			// Remember a node consists of a key/value
+			printf("\tKey=%s\n", iterator->kv->key);
+			// Move our iterator in that particular bucket 
+			// forward one node until we reach the end of our chain.
+			iterator =  iterator->next;
+		}
+	}
 }
 
 #endif
