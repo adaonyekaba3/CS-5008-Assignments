@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "my_hashmap.h"
 
 
@@ -21,6 +22,8 @@ int unitTest1(){
     printf("pig was removed should be 0: %d\n",hashmap_hasKey(myHashmap,"pig"));
     // Finally terminate our hashmap
     hashmap_delete(myHashmap);
+    
+    return 0;
 }
 
 int unitTest2(){
@@ -43,12 +46,13 @@ int unitTest2(){
     hashmap_delete(myHashmap);
 
 }
+
 int main(){
 
     printf("============ unitTest1() ================\n");
     unitTest1();
-    printf("============ unitTest2() ================\n");
-    unitTest2();
+//    printf("============ unitTest2() ================\n");
+//    unitTest2();
     
     return 0;
 }
