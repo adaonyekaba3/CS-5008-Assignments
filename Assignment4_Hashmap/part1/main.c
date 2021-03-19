@@ -45,14 +45,15 @@ int unitTest2(){
     // Finally terminate our hashmap
     hashmap_delete(myHashmap);
 
+    return 0;
 }
 
 int main(){
 
     printf("============ unitTest1() ================\n");
     unitTest1();
-//    printf("============ unitTest2() ================\n");
-//    unitTest2();
+    printf("============ unitTest2() ================\n");
+   unitTest2();
     
     return 0;
 }
