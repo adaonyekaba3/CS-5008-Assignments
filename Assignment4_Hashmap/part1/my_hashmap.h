@@ -80,15 +80,13 @@ hashmap_t* hashmap_create(unsigned int _buckets){
 // Must also free all of the chains in the hashmap
 // This function should run in O(n) time
 void hashmap_delete(hashmap_t* _hashmap){
-  	
-	// initialize free hashmap and all elements of its memory.
-	if (_hashmap != NULL){ 
+
+	while(_hashmap != NULL){
 		return;
 	}
 	// Free all memory used by the buckets.
 	// free the hashmap struct
 	free(_hashmap);
-
 }
 
 // Returns a boolean value if a key has been put into
@@ -215,6 +213,18 @@ char* hashmap_getValue(hashmap_t* _hashmap, char* key){
 	return 0;						
 }
 
+// Frees a node 
+void free_node(node_t* node){
+	if (!node){ return; }
+	
+	// free each pointer after node inserted
+	free(node->kv->value);
+	free(node->kv->key);
+	free(node->kv);
+	free(node);
+}
+
+
 // Remove a key from a hashmap
 // The algorithm is:
 //  - Determine if the key exists--return if it does not.
@@ -223,7 +233,7 @@ char* hashmap_getValue(hashmap_t* _hashmap, char* key){
 // This function should run in average-case constant time
 void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 	// Determine if the key exists, return if yes
-	if (hashmap_hasKey(_hashmap, key)){
+	if (hashmap_hasKey(_hashmap, key)==1){
 		return;
 	}
 	// call the hashap function on the key
@@ -234,12 +244,12 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 	// search the hashmap's bucket for the key, then remove it
 	while( iterator != 0 ){
 		if (strcmp(iterator->kv->key, key) == 0){
-				 	
+		
+			iterator = iterator->next;		 	
 		// remove from bucket by freeing memory 
+			free(key);
 		}
-		iterator = iterator->next;
-	}
-	free(key);	
+	}		
 }
 
 // Update a key with a new Value
@@ -269,7 +279,7 @@ void hashmap_update(hashmap_t* _hashmap, char* key, char* newValue){
 		iterator = iterator->next; 
 	}
 	// ask how to demonstrate update new value successfully 
-	//free(key);
+	free(key);
 }
 
 // Prints all of the keys in a hashmap
