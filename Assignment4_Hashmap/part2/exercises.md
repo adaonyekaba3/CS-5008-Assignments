@@ -9,9 +9,9 @@ Discuss and answer the following questions (Make sure to elaborate and justify y
 
 ## Answers:
 
-1. *edit your answer here for Part 2 question 1*
-2. *edit your answer here for Part 2 question 1*
-3. *edit your answer here for Part 2 question 1*
-4. *edit your answer here for Part 2 question 1*
+1. the provided hash function is efficient enough. We are getting constant time operations using O(n) time. 
+2. The mid-square method is another numerical technique to implement the hash function. 
+3. The Big-O complexity is O(n) or O(1) for insert, delete, etc. 
+4. Open addressing is a method for handling collisions, where elements are stored in the hash table and the size of the table must be greater than or equal to the number of buckets. 
 
 
