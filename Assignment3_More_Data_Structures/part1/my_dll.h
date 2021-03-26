@@ -40,21 +40,37 @@ typedef struct DLL{
 // Returns NULL if we could not allocate memory.
 dll_t* create_dll(){
 	// Modify the body of this function as needed.
-<<<<<<< HEAD
+
 	dll_t* myDLL = (dll_t*)malloc(sizeof(dll_t));	
 	myDLL->head = NULL; // node dll initializes nodeDLL->head->tail->NULL
 	myDLL->tail = NULL;
 	myDLL->count = 0;
 	
 	return myDLL;
-=======
-	dll_t* myDLL = (dll_t*)malloc(sizeof(dll_t));
-	myDLL->head = NULL; //new dll_t points to head
-	myDLL->tail = NULL; // then to tail
-	myDLL->count = 0; 	// then to count
 
-	return myDLL; // returns newly created dll_t.
->>>>>>> 58073032229451b80c46a62c4716523df78250b4
+}
+
+// Print dll function
+void print_dll(dll_t* l){
+	node_t* iterator = l->tail;
+	
+	printf("================\nCount: %d\n", l->count);
+	
+	if(iterator){
+		printf("Tail: %d\n", iterator->data);
+	}
+	iterator = l->head; 
+	if (iterator){
+		printf("Head: %d\n", iterator->data);
+	}
+	printf("Data: \n");
+	for(int i = 0; i<l->count; i++){
+		printf("%d ", iterator->data);
+		iterator = iterator->next;
+	}
+	printf("\n\n");
+	
+	return;
 }
 
 // DLL Empty
@@ -63,7 +79,7 @@ dll_t* create_dll(){
 // Returns 0 if false (the DLL has at least one element enqueued)
 // Returns -1 if the dll is NULL.
 int dll_empty(dll_t* l){
-<<<<<<< HEAD
+
 	
 	// list is empty
 	if(l->count == 0){
@@ -73,7 +89,7 @@ int dll_empty(dll_t* l){
 		return 0;
 	}
 	return -1;
-=======
+
 
 	if (l->count == 0){ // checks that dll is empty
 		return 1; 		// states TRUE
@@ -86,7 +102,7 @@ int dll_empty(dll_t* l){
 	else{
 		return -1; 			// returns this cuz dll is empty.
 	}
->>>>>>> 58073032229451b80c46a62c4716523df78250b4
+
 }
 
 // push a new item to the front of the DLL ( before the first node in the list).
@@ -95,7 +111,7 @@ int dll_empty(dll_t* l){
 // Returns -1 if DLL is NULL.
 // (i.e. the memory allocation for a new node failed).
 int dll_push_front(dll_t* l, int item){
-<<<<<<< HEAD
+
 	
 	if (l == NULL ){
 		return -1;
@@ -120,25 +136,15 @@ int dll_push_front(dll_t* l, int item){
 	//if (l != NULL){
 	//l->head->previous = newNode;
 	l->head = newNode;
-		 
-	
-	/*
-	else{
-		//code 
-		newNode->next = l->head;
-		l->head->previous = newNode;
-		l->head = newNode;*/
 	
 	// if pushfront returns on failure. 	
 	l->count++;
 	return 1;
-=======
 
 	// initializing inserting new node
 	printf("\npushing %d in back\n", item);
 
 	// 1. create a new node
-	node_t* newNode = (node_t*)malloc(sizeof(node_t));
 	if ( newNode == NULL ){
 		newNode->data = item;
 		newNode->next = NULL;
@@ -160,7 +166,7 @@ int dll_push_front(dll_t* l, int item){
 	}	
 		l->count++;
 		return 0;
->>>>>>> 58073032229451b80c46a62c4716523df78250b4
+
 }
 
 // push a new item to the end of the DLL (after the last node in the list).
@@ -184,15 +190,19 @@ int dll_push_back(dll_t* l, int item){
 		newNode->previous = NULL;
 		return -1;
 	}
+	if (dll_empty(l)){
+		l->head = l->tail = newNode;
+	}
 	// 3. returns 0 if new node fails 
 	// to be created.
-	else if (l->count == 0){
+	if (l->count == 0){
 		l->tail = newNode;
+		newNode->next = l->head;
 		l->head = newNode;
 	}
 	else{
-		newNode->previous = l->tail;
-		l->tail->next = newNode;
+		//newNode = l->tail;
+		//l->next = newNode;
 		l->tail = newNode;
 	}	
 	l->count++;
@@ -206,7 +216,13 @@ int dll_push_back(dll_t* l, int item){
 // Assume no negative numbers in the list or the number zero.
 int dll_pop_front(dll_t* t){
 	
+	// NULL Check 
+	if ( t == NULL){
+		return -1;
+	}
+	// initialize new item.
 	int popItem = t->head->data;
+	
 	// print node removed from front dll. 
 	// 1. return the first item to dll
 	// remove it from the list 
@@ -218,9 +234,7 @@ int dll_pop_front(dll_t* t){
 		t->head = NULL;
 		t->tail = NULL;
 	}
-	else {
-		//int popItem = t->head->data;
-		
+	else {	
 		node_t* temp = t->head;
 		temp->next->previous = NULL; 
 		t->head = temp->next;
@@ -238,14 +252,37 @@ int dll_pop_front(dll_t* t){
 // Assume no negative numbers in the list or the number zero.
 int dll_pop_back(dll_t* t){
 	
-	if ( t == NULL ){
+	if (dll_empty(t)){
+		exit(1);
+	}
+	
+	node_t* temp = t->tail;
+	t->tail = temp->previous;
+	
+	if(t->tail == NULL){
+		t->head = NULL;
+	}
+	else{
+		t->tail->next = NULL;
+		free(temp);
+		t->count--;
+	}
+		return 0;
+	
+	/*if ( t == NULL ){
 		return -1;
 	}
+	if (t->count == 0){
+		return 0;
+	}
+
 	// print node removed from back dll.
 	//printf("\npopping from back\n");	
-			
-	// initialize popped item 
-	int popItem = t->tail->data;
+	 		
+	// initialize popped item
+	// pointer to node REMEMBER! 
+	int popItem = t->next;
+	popItem->next = t->tail;
  
 	// 1. return last item in dll if its empty.
 	// remove it from the list (pop).
@@ -261,8 +298,8 @@ int dll_pop_back(dll_t* t){
 		free(temp);
 	}
 	t->count--;
-	//printf("\nnew item has been popped from back!\n");
-	return popItem;		 
+	//printf("\nnew item has been popped from back!\n")
+	return popItem;*/		 
 }
 
 // Inserts a new node before the node at the specified position.
@@ -275,39 +312,33 @@ int dll_pop_back(dll_t* t){
 // Returns -1 if the list is NULL
 int dll_insert(dll_t* l, int pos, int item){
 	
+	//int cur = 0;
+	//node_t* ptr = l->head;
+
 	// print to insert new node at pos. 
-	//printf("\ninserting node %d at pos %d ", item, pos);
+	printf("\ninserting node %d at pos %d ", item, pos);
 	
+	// NULL CHECK  
+	if (l == NULL || pos < 0 || pos >= l->count){
+		return -1;
+	}
+	node_t* cur = l->head;
+	for (int i=0; i < pos; i++){
+		cur = cur->next;
+	}
+
 	// initialize insert new node conditional statements 
 	node_t* newNode = (node_t*)malloc(sizeof(node_t));
 	newNode->data = item;
-        newNode->next = NULL;
-        newNode->previous = NULL;	
+        newNode->previous = cur->previous;
+        newNode->next = cur;	
 	
-		int cur = 0;
-                node_t* ptr = l->head;
-
-	if ( newNode == NULL ){
-                return -1;
+	if (cur == l->head){ // if dll at head 
+		l->head = newNode;
+		cur->previous =  newNode;
 	}
-	// if the list is NULL
-	else if ( pos < 0 || pos >= l->count ){
-	        return 1; 
-	}
-	/*else ( pos == 0 );{
-		return dll_pushfront(l, item);
-	}*/
-	while ( cur != pos){
-		ptr = ptr->next;		
-		cur ++;
-	
-		newNode->next = ptr;
-		newNode->previous = ptr->previous;
-		ptr->previous->next = newNode;
-		l->count++;
-		
-	}
-	//printf("\nnew node has been added!\n");
+	l->count++;	
+	printf("\nnew node has been added!\n");
 	return 0; // returns 0 on failure to insert new node.
 }
 
