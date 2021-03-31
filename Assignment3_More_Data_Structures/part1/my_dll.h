@@ -52,19 +52,15 @@ dll_t* create_dll(){
 
 // Print dll function
 void print_dll(dll_t* l){
-	node_t* iterator = l->tail;
+		node_t* iterator = l->head;
 	
-	printf("================\nCount: %d\n", l->count);
+	//printf("================\nCount: %d\n", l->count);
 	
-	if(iterator){
-		printf("Tail: %d\n", iterator->data);
-	}
 	iterator = l->head; 
-	if (iterator){
+	/*if (iterator){
 		printf("Head: %d\n", iterator->data);
-	}
-	printf("Data: \n");
-	for(int i = 0; i<l->count; i++){
+	}*/
+	while(iterator != NULL){
 		printf("%d ", iterator->data);
 		iterator = iterator->next;
 	}
@@ -118,7 +114,7 @@ int dll_push_front(dll_t* l, int item){
 	}
 	// initialize print new item at 
 	// front of list 
-	printf("\npushing %d at front\n", item);
+	//printf("\npushing %d at front\n", item);
 	
 	// 1. allocate / create  new node at the front of dll
 	node_t* newNode = (node_t*)malloc(sizeof(node_t));
@@ -142,7 +138,7 @@ int dll_push_front(dll_t* l, int item){
 	return 1;
 
 	// initializing inserting new node
-	printf("\npushing %d in back\n", item);
+	//printf("\npushing %d in back\n", item);
 
 	// 1. create a new node
 	if ( newNode == NULL ){
@@ -177,7 +173,7 @@ int dll_push_front(dll_t* l, int item){
 int dll_push_back(dll_t* l, int item){
 	
 	// print item to insert at back of dll
-	printf("\npushing %d at back\n", item);
+	//printf("\npushing %d at back\n", item);
 	
 	// 1. create a new node at end of dll
 	node_t* newNode = (node_t*)malloc(sizeof(node_t));
@@ -206,7 +202,7 @@ int dll_push_back(dll_t* l, int item){
 		l->tail = newNode;
 	}	
 	l->count++;
-	printf("\nnew item has been pushed into back dll!\n");
+	//printf("\nnew item has been pushed into back dll!\n");
 	return 0; 
 }
 
@@ -268,38 +264,6 @@ int dll_pop_back(dll_t* t){
 		t->count--;
 	}
 		return 0;
-	
-	/*if ( t == NULL ){
-		return -1;
-	}
-	if (t->count == 0){
-		return 0;
-	}
-
-	// print node removed from back dll.
-	//printf("\npopping from back\n");	
-	 		
-	// initialize popped item
-	// pointer to node REMEMBER! 
-	int popItem = t->next;
-	popItem->next = t->tail;
- 
-	// 1. return last item in dll if its empty.
-	// remove it from the list (pop).
-	if ( t->count == 1){
-		free(t->tail);
-		t->head = NULL;
-		t->tail = NULL;
-	}
-	else{
-		node_t* temp =t->tail;
-		temp->next = NULL;
-		t->tail = temp->previous;
-		free(temp);
-	}
-	t->count--;
-	//printf("\nnew item has been popped from back!\n")
-	return popItem;*/		 
 }
 
 // Inserts a new node before the node at the specified position.
@@ -316,7 +280,7 @@ int dll_insert(dll_t* l, int pos, int item){
 	//node_t* ptr = l->head;
 
 	// print to insert new node at pos. 
-	printf("\ninserting node %d at pos %d ", item, pos);
+//	printf("\ninserting node %d at pos %d ", item, pos);
 	
 	// NULL CHECK  
 	if (l == NULL || pos < 0 || pos >= l->count){
@@ -324,7 +288,8 @@ int dll_insert(dll_t* l, int pos, int item){
 	}
 	node_t* cur = l->head;
 	for (int i=0; i < pos; i++){
-		cur = cur->next;
+		//cur = cur->next;
+		cur++;
 	}
 
 	// initialize insert new node conditional statements 
@@ -338,7 +303,7 @@ int dll_insert(dll_t* l, int pos, int item){
 		cur->previous =  newNode;
 	}
 	l->count++;	
-	printf("\nnew node has been added!\n");
+//	printf("\nnew node has been added!\n");
 	return 0; // returns 0 on failure to insert new node.
 }
 
@@ -352,7 +317,7 @@ int dll_insert(dll_t* l, int pos, int item){
 int dll_get(dll_t* l, int pos){
 	
 	// print where position is collected.
-	printf("\nitem inserted %d at pos", pos);
+	//printf("\nitem inserted %d at pos", pos);
 		
 	int cur = 0;
 	node_t* ptr = l->head;
@@ -368,7 +333,7 @@ int dll_get(dll_t* l, int pos){
 		ptr = ptr->next;
 		cur++;
 	}
-	printf("\nnew node has been added!\n");
+	//printf("\nnew node has been added!\n");
 	return ptr->data;	
 }
 
@@ -385,33 +350,33 @@ int dll_remove(dll_t* l, int pos){
 		return -1;
 	}
 	// print pos where item is removed. 
-	printf("\nremoving item at pos %d", pos);	
+	//printf("\nremoving item at pos %d", pos);	
 	
 	int cur = 0;
 	node_t* ptr = l->head;
 	
 	// initialize to remove item at pos = 0.
 	// returns -1 if dll node is empty.
-	if ( pos < 0 || pos >= l->count || l->count == 0 ){
-		return -1;
+	if (pos < 0 || pos >= l->count || l->count == 0){
+		return -1;	
 	}
-	else if ( pos == 0 ){
+	else if ( pos == 0){
 		return dll_pop_front(l);
 	}
-	if ( pos == l->count-1 ){
-		return dll_pop_back(l); // init removing item from dll. 
+	if (pos == l->count-1){
+		return dll_pop_back(l); // init removing item from dll.
 	}
 	while ( cur != pos ){
 		ptr = ptr->next;
 		cur++;
 	}
-		ptr->previous->next = ptr->next;
+		//ptr->previous->next = ptr->next;
 		ptr->next->previous = ptr->previous;
 		free(ptr);
 		l->count--;
 		return 0; // if removing item fails.
  	
-	printf("\nnode has been removed!\n");
+	//printf("\nnode has been removed!\n");
 }
 
 // DLL Size
@@ -448,7 +413,7 @@ void free_dll(dll_t* t){
 
 	t->tail = NULL;
 	t->count = 0;
-	printf("\nfreeing the dll now!\n");
+//	printf("\nfreeing the dll now!\n");
 	free(t);	
 	
 }
