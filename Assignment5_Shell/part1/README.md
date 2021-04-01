@@ -104,19 +104,25 @@ At a high level, implementing mini-shell takes the following components:
 -----------------------------------------------------
 NAME: 
 
-*edit me*
+Ada Onyekaba
 
 SYNOPSIS: 
 
-*edit me and add in a short description of the command and its usage*
+- cmd: entered by the user 
+- input: file descriptor
+- first: used as a flad to identify the current command is first command in pipeline.
+- last: used as a flag, to identify last command in pipeline.
+- ls - see current files in location within directory 
+- cd : current directory 
+etc. 
 
 DESCRIPTION:
 
-*Write a longer description of what he command does*
+Each command is meant to help simulate the UNIX/linux environment within the shell. 
 
 NOTES:
 
-*Enter two or three sentences (minimum) in how you implemented the built-in command.*
+I implemented the built in commands by making several helper functions to use in order to call specific commands within the minishell such as the parse function, the cleanup command, and run command.  
 
 -----------------------------------------------------
 
