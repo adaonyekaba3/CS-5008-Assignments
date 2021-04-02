@@ -17,13 +17,29 @@ int colors[64][64*3];
 int counter = 0;
 pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 
+// MODIFY paint function here.
+void paint(int workID){
+	printf("Artist %d is painting\n", workID);
+	
+	// workID corresponds to the 'artist'
+	// each artist gets one row to paint on. 
+	// an artist paints along each pixel 1 at a time, painting an 
+	// R, D, G value. 
+	for(int i=0; i < 64*3; i++){
+		colors[workID][i] = workID; 
+	}
+}
+
 // Thread with variable arguements.
 void *thread(void *vargp){
 	pthread_mutex_lock(&mutex1);
 		counter += 1;
 	pthread_mutex_unlock(&mutex1);
+
 	return NULL;
+
 }
+
 
 // Define main 
 int main(){
@@ -34,6 +50,7 @@ int main(){
 	// Create and execute multiple threads
 	for(int i=0; i < NTHREADS; ++i){
 		pthread_create(&tids[i], NULL, thread, NULL);
+		paint(i);
 	}
 	// Create and execute multiple threads.
 	for(int i=0; i < NTHREADS; ++i){
@@ -41,6 +58,7 @@ int main(){
 	}
 	printf("Final Counter value: %d\n", counter);
 	printf("MAsterpiece (threads.ppm) is being assembled\n");
+	
 	// Write out a ppm file
 	FILE *fp;
 	fp = fopen("threads.ppm", "w+");
