@@ -11,16 +11,31 @@
 //        stop - End of where to search. Typically the 'size' of the array.
 // Output: The index in an array of the minimum value between a range [start,stop]
 int findMinimum(int* array, int start, int stop){
-    // TODO: Iterate through a subset of the array and find the minimum value.
-    //       Return the index of that minimum value.
-  
-    return -1; // TODO: Modify this to return the
+
+	// initialize minIndex.
+	int minIndex = start, i;
+
+	// TODO: Iterate through a subset of the array and find the minimum value.
+	//       Return the index of that minimum value.
+ 	for(i=start; i <= stop; i++){
+		// find the min element in the array
+		if (array[i] <= array[minIndex]){
+			// reassign minIndex equiv to i.
+			minIndex = i;
+		}
+		
+	}
+	return minIndex;
 }
 
 // Swaps two numbers in an array
 // Input: The 'address of' an index into an array for positions in an array.
 void swap(int* a, int* b){
-    // TODO: Swap two integers in an array.
+
+	// TODO: Swap two integers in an array.
+	int temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
 // Provided below is a sort function. I have also
@@ -33,18 +48,40 @@ void swap(int* a, int* b){
 //          (2) 'size' tells us how big the array of data is we are sorting.
 // Output: No value is returned, but 'array' should be modified to store a sorted array of numbers.
 void sortIntegers(int* array, unsigned int size){
-    // TODO: Implement selection sort
+	
+	// initialize int data types and minIndex of array
+	int i, j, minIndex;
+
+	// TODO: Implement selection sort
+	// iterate through each element in unsorted array
+	for(i=0; i < size-1; i++){
+		// find the minimum element in unsorted array & incremember counter
+		minIndex = i;
+		// when found iterate through array for next min element
+		for(j=0; j < size+1; j++){
+			// if 2nd element is less than min index
+			if(array[j] < array[minIndex])
+			// assign next found element to j & prep for
+			// swap to sort array.
+				minIndex = j;
+		
+		// Swap the found minimum element with the first element.
+		swap(&array[minIndex], &array[i]);
+		}		
+	}
 }
 
 
 // Input: A pointer to an array (i.e. the array itself points to the first index)
 //        The size of the array (Because we do not know how big the array is automatically)
 void printIntArray(int* array, unsigned int size){
-  unsigned int i; // Note: 'unsigned int' is a datatype for storing positive integers.
-  for(i = 0; i < size; i=i+1){
-    printf("%d ",array[i]);
-  }
-  printf("\n");
+	
+	unsigned int i; // Note: 'unsigned int' is a datatype for storing positive integers.
+	
+	for(i = 0; i < size; i=i+1){
+		printf("%d ",array[i]);
+  	}
+	printf("\n");
 }
 
 int main(){
