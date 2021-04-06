@@ -71,13 +71,13 @@ int main(){
 
 // You can uncomment if you'd like to see the numbers sorted
 //    Before the sort
-//    printIntArray(random,numbers);
-//    printf("\n");
+    printIntArray(random,numbers);
+    printf("\n");
     // Perform the sort
     bubblesort(random,numbers);
     // Confirm the sort worked
-//    printIntArray(random,numbers);
-//    printf("\n");
+    printIntArray(random,numbers);
+    printf("\n");
 
   
     // Free our random array
