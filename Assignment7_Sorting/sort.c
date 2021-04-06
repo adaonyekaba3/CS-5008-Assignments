@@ -8,7 +8,12 @@
 // Swaps two numbers in an array
 // Input: The 'address of' an index into an array for positions in an array.
 void swap(int* a, int* b){
-    // TODO: Swap two integers in an array.
+	
+	// TODO: Swap two integers in an array.
+	int temp;
+	temp = *b;
+	*b = *a;
+	*a = temp;
 }
 
 // Provided below is a sort function. We have also
@@ -21,18 +26,37 @@ void swap(int* a, int* b){
 //          (2) 'size' tells us how big the array of data is we are sorting.
 // Output: No value is returned, but 'array' should be modified to store a sorted array of numbers.
 void sortIntegers(int* array, unsigned int size){
-    // TODO: Implement insertion sort
+	// TODO: Implement insertion sort
+	// initialize data for i,j, & key
+	int i, j;
+	
+	// iterate through each item in the array.
+	for(int i=0; i < size; i++){
+		// j element should search for next element 
+		// after identifying first element for sort
+		j = i-1;
+		// while loop runs from ith element towards first element
+		while(j >= 0 && array[j] > array[j+1]){
+			// loop stops at one of two conditions.
+			/* 1. if we reach the first element of the array
+ * 			   2. if we get two sorted elements in ascending order.*/
+			// then swap the unsorted elements
+			swap(array+j+1, array+j);
+			j = j-1;
+		}
+	}
+
 }
 
 
 // Input: A pointer to an array (i.e. the array itself points to the first index)
 //        The size of the array (Because we do not know how big the array is automatically)
 void printIntArray(int* array, unsigned int size){
-  unsigned int i; // Note: 'unsigned int' is a datatype for storing positive integers.
-  for(i = 0; i < size; i=i+1){
-    printf("%d ",array[i]);
-  }
-  printf("\n");
+	unsigned int i; // Note: 'unsigned int' is a datatype for storing positive integers.
+	for(i = 0; i < size; i=i+1){
+		printf("%d ",array[i]);
+  	}
+	printf("\n");
 }
 
 int main(){
