@@ -9,7 +9,10 @@
 
 ## Answers:
 
-1. *edit your answer here for question 1*
-2. *edit your answer here for question 2*
-3. *edit your answer here for question 3*
-4. *edit your answer here for question 4*
+1.Big-o complexity of this selection sort algorithm is O(n^2).
+
+2. Best-o complexity of selection sort is of O(n log n).
+
+3. Since selection sort is an in-place sorting algorithm, it does not require additional storage.
+
+4. No it would not be changed. 
