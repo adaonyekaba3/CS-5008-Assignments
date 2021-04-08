@@ -87,7 +87,7 @@ int partition(char** array, unsigned int low, unsigned int high){
 	// compare them with the pivot.
 	for (int j=low; j < high; j++){
 
-		if(array[j] <= (char*)pivot){
+		if(strcmp(array[j], *pivot) <= 0){
 			
 			// if element smaller than pivot is found
 			// swap it with the greater element pointed by i
@@ -118,7 +118,7 @@ void quicksort(char** array, unsigned int low, unsigned int high){
 	
 		// recursive call on the right of pivot.
 		//quicksort(array, high, pi+1);
-		quicksort(array, low, pi+1);
+		quicksort(array, pi+1, high);
 	}
 }
 
@@ -150,14 +150,14 @@ int main(){
 	clock_t start2,end2;
 	start2 = clock();
 	// perform quicksort after starting your timer
-	quicksort(musicDatabase2,0,13594);  
+	quicksort(musicDatabase2,0,13593);  
 	end2 = clock();
 	double experiment2 = ((double)(end2-start2)/CLOCKS_PER_SEC);
 	// ===========================================
  
 	// check correctness
 	// by printing out the first few items
-	const int items = 20; // change this to up to 13594
+	const int items = 13593; // change this to up to 13593
 	printf("O(N*N) sort produces\n"); 
 	printArrayOfCharStrings(musicDatabase1,0,items);
   	printf("\n quick sort produces\n"); 
