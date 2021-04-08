@@ -8,19 +8,19 @@
 
 1. Explain: What do you think the Big-O (worst-case) complexity of the merge sort algorithm is and why? 
 
-*edit your answer here for Task 2 question 1*
+*Big-O complexity (worst case) of merge sort is 0(n*log n) because we divide the the arrays into 2 arrays of length 1 and combine the results in order (smallest to biggest). *
 
 2. Explain: What do you think the best-case complexity of the merge sort algorithm is and why?
 
-*edit your answer here for Part 2 question 2*
+*Best case is 0(n*log n) because it requires an equal amount of additional space as the unsorted array.*
 
 3. Does merge sort require any additional storage beyond the original array? If so how much and why?
 
-*edit your answer here for Part 2 question 3*
+*it requires an equal amount of additional space as the unsorted array.*
 
 4. How much time in Big-O does it take to merge all of the subarrays together? Explain or draw why?
 
-*edit your answer here for Part 2 question 4*
+*about the same amount of time as quicksort since is requires the same amount of additional space as the unsorted array.*
 
 
 ## Interview Prep (Optional +1% Bonus on assignment)
