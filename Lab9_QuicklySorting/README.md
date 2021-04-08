@@ -98,7 +98,7 @@ void swapStrings(char** s1, char** s2){
 
 <!--**Answer the following with your partner:**--> **Answer the following here**: How do you think the strcmp function is implemented? i.e. What would your algorithm be in a sentence or two?
 
-*edit your answer here*
+* the strcmp function is implemented by comparing two strings character by character using ASCII value of the characters. The comparison stops when either end of the string is reached or corresponding characters are not the same. a non-zero value returned on mismatch is the difference of the ASCII values of the non-mismatching characters of two strings. 
 
 # Part 3 - Quick sort
 
