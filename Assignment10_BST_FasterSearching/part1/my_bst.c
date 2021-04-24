@@ -4,6 +4,19 @@
 // Include any other libraries needed
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+// Creates new node for BST.
+bstnode_t* create_node(int item){
+	// init new node.
+	bstnode_t* newNode = (bstnode_t*)malloc(sizeof(bstnode_t));
+	newNode->data = item;
+	newNode->leftChild = NULL;
+	newNode->rightChild = NULL;
+	
+	return newNode;
+}
 
 // Creates a BST
 // Returns a pointer to a newly created BST.
@@ -11,24 +24,14 @@
 // The BST fields should also be initialized to default values(i.e. size=0).
 bst_t* bst_create(){
 	
-	int data;
-	
-	// print statement to indicate memory allocation
-	printf("Enter data of node to be insrted: ");
-	scanf("%d", &data);
-
 	// Modify the body of this function as needed.
-	bst_t* myBST = (bst_t*)malloc(1*sizeof(bst_t));
-	
-	if(myBST == NULL){
-		return NULL;	
-	}else{
-		myBST->root = NULL;
-		// SET count to 0, as no node is added to BST. 
-		myBST->size = 0;
-	}
+	bst_t* myBST = (bst_t*)calloc(1,sizeof(bst_t));
+	myBST->size = 0;
+	myBST->root = NULL;
+
 	return myBST;	
 }
+
 
 // BST Empty
 // Check if the BST is empty
@@ -36,39 +39,10 @@ bst_t* bst_create(){
 // Returns 0 if false (the BST has at least one element)
 int bst_empty(bst_t* t){
 	
-	// NULL Check!
-	if(t == NULL){
-		return 1; // True if binary search tree is empty!
-	}else{
-		return 0; // False if at least 1 element is found!
-	}
+	return t->size == 0;
 }
 
-// bst_insert(1, t) inserts item 1 into the bst tree
-// effects: modifies t if i is not already in t.
-// function must be called from add_BST() function
-node_insert(bstnode_t* bstnode, int key){
-	
-	// perform NULL Check!
-	if(bstnode == NULL){
-		// allocate memory for new node 
-		bstnode* temp = (bstnode*)malloc(sizeof(bstnode));
-		// initialize node by value && set left/righ child to NULL.
-		temp->data = key;
-		temp->leftChild = NULL;
-		temp->rightChild = NULL;
-		return temp;
-	// else recurse down the tree.
-	} // insert at left child 
-	if(key < bstnode->data){
-		bstnode->leftChild = node_insert(bstnode->leftChild, key);	
 
-	}else if(key > bstnode->data){
-		bstnode->rightChild = node_insert(bstnode->rightChild, key);
-	}
-	return bstnode;
-}	
-/*
 // Adds a new node containng item to the BST
 // The item is added in the correct position in the BST.
 //  - If the data is less than or equal to the current node we traverse left
@@ -79,77 +53,193 @@ node_insert(bstnode_t* bstnode, int key){
 //      (i.e. the memory allocation for a new node failed).
 // Your implementation should should run in O(log(n)) time.
 //  - A recursive imlementation is suggested.
-int bst_add(bst_t* t, int item){
-	
-	// NULL Check first!
-	if(t==NULL){
-		return NULL;
+int bst_addHelper(bstnode_t* t, int item)
+{
+	if(t){
+		if(item <= t->data){
+			if(t->leftChild == NULL){
+				// if new node created 
+				t->leftChild = create_node(item);
+				return 1; // if successful
+			}else{
+				if(bst_addHelper(t->leftChild,item) == 1)
+					return 1; // if successful. 
+				
+			}
+		}else{
+			if(t->rightChild == NULL){
+				// if new node created
+				t->rightChild = create_node(item);
+				return 1; // if successful	
+			}else{
+				if(bst_addHelper(t->rightChild,item) == 1){
+					return 1; // if successful
+				}
+			}
+		}
 	}
-	printf("item added: %d now\n", item);
+	return -1; // if failed.
+}
+int bst_add(bst_t* t, int item)
+{
 	
-	// 1. allocate/create new node to bst
-	bstnode_t* new_bstnode = insert(t->root, item);
+	// init status integer & print
+	int status = -1;
 	
-	// if insertion fails
-	if(new_bstnode == NULL){
-		return 1;
+	if(t){
+		if(t->root == NULL){						
+			// if pointer at root is empty 
+			// node is created.
+			t->root = create_node(item);
+			status = 1;	
+		}else{
+			// call addHeler at node 
+			status = bst_addHelper(t->root, item);	
+		}
+	}else{
+		if(status == 1){
+			// create pointer for size 
+			t->size++;
+		}
+	
+	}
+	return status;
+}
 
-	}for(int i=0; i <  
-	// set new_bstnode as root of BSTtree
-	t->root = new_bstnode;
-	// incrememnt count
-	t->count++;
-	return 0;
+// print bst in ascending order and then descending order
+// if order = 0, then recursively call bst_print_ascending 
+// starting from node to left then to rightChild 
+// and for descending - start from node right to left 
+void bst_print_ascending(bstnode_t* t)
+{
+	if(t){
+		// print bst ascending from left to right
+		bst_print_ascending(t->leftChild);
+		printf("%d\n", t->data);
+
+		bst_print_ascending(t->rightChild);
+	}
+}
+
+//descending order bst print 
+void bst_print_descending(bstnode_t* t)
+{
+	if(t){
+		// print bst descending from right to left 
+		bst_print_descending(t->rightChild);
+		printf("%d\n", t->data);
+
+		bst_print_descending(t->leftChild);
+	}
 }
 
 // Prints the tree in ascending order if order = 0, otherwise prints in descending order.
 // For NULL tree -- print "(NULL)".
 // It should run in O(n) time.
 void bst_print(bst_t *t, int order){
-    if(NULL == t){
-        printf("(NULL)");
-    }else{
 
-    }
+	if(NULL == t){
+		
+		printf("(NULL)");
+
+	}else{
+		if(order == 0){	
+			bst_print_ascending(t->root);
+		}else{
+			bst_print_descending(t->root);
+		}
+
+
+	}
+}
+// bst add -sumHelper 
+// returns the sum of all nodes in the bst 
+// exits the program for a NULL tree 
+// runs in O(n) time
+int sumHelper(bstnode_t* node)
+{
+	if(node){
+		return node->data = sumHelper(node->leftChild) + sumHelper(node->rightChild);
+	}
+	// if true 
+	return 0;	
 }
 
 // Returns the sum of all the nodes in the bst. 
 // exits the program for a NULL tree. 
 // It should run in O(n) time.
 int bst_sum(bst_t *t){
-  return 0;
+	
+	return sumHelper(t->root);
+}
+
+// bst findHelper function is needed. 
+int findHelper(bstnode_t* node, int value)
+{
+	if(node)
+	{
+		if(node->data == value)
+		{
+			return 1; // if value is found successfully.
+		}
+		if(findHelper(node->leftChild,value) == 1)
+		{
+			return 1; // if value is found successfully in left child position.	
+		}
+		if(findHelper(node->rightChild,value) == 1)
+		{
+			return 1; // if value is successfully found!
+		}
+	
+		
+	}return 0;	
 }
 
 // Returns 1 if value is found in the tree, 0 otherwise. 
 // For NULL tree it exits the program. 
 // It should run in O(log(n)) time.
 int bst_find(bst_t * t, int value){
-
-	// NULL Check!
-	if (t == NULL){
-		exit(0);
-	}else{
-		return 1;
-	}
+	
+	// recursive call findHelper function.
+	findHelper(t->root,value);
+	return 1;	
 }
 
 // Returns the size of the BST
 // A BST that is NULL exits the program.
 // (i.e. A NULL BST cannot return the size)
-unsigned int bst_size(bst_t* t){
-    return 0;
+unsigned int bst_size(bst_t* t)
+{
+	
+	if(t){
+		return t->size;
+	}else{
+		exit(0);
+	}
+	return 0;
+}
+
+// create freeHelper function.
+void freeHelper(bstnode_t* t)
+{
+	
+	if(t){
+		// recursively call freeHelper function from left to right
+		freeHelper(t->leftChild);
+		freeHelper(t->rightChild);
+		// call built in free function on node
+		free(t);
+	}
 }
 
 // Free BST
 // Removes a BST and ALL of its elements from memory.
 // This should be called before the proram terminates.
 void bst_free(bst_t* t){
-	// Frees the complete BST from memory.
-	if(!root){
-		return;
-	}
-	bst_free(root->leftChild);
-	bst_free(root->rightChild);
-	free(root);
+	
+	// recursively call bst_free Helper function.
+	freeHelper(t->root);
+	t->size = 0;
+	free(t); // free the node. 
 }
-*/
+

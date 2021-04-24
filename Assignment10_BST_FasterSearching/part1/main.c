@@ -28,42 +28,47 @@
 
 // Testing allocation
 int unitTest1(){
-    int result;
-    bst_t * testBST = bst_create();
-    if (testBST!=NULL){
-        result = 1;
-    }else{
-        result = 0;
-    }
-    bst_free(testBST);
-    return result;    
-}
+    	int result;
+    	bst_t * testBST = bst_create();
+    	if (testBST!=NULL){
+		result = 1;	
+	}else{
+		result 0;
+	}
+    	bst_free(testBST);
+    	printf("%d\n", result);
+	return result;    
+}	
+
 
 // Add and find a node
 int unitTest2(){
-    int result;
-    bst_t * testBST = bst_create();
-    bst_add(testBST,78);
-    result = bst_find(testBST,78);
-    bst_free(testBST);    
-    return result;
+    	
+	int result;
+    	bst_t * testBST = bst_create();
+    	bst_add(testBST,78);
+    	result = bst_find(testBST,78);
+	bst_free(testBST);    
+   	printf("%d\n", result);
+	return result;
 }
 
 // Sums the nodes in a BST
 int unitTest3(){
-    int result;
-    bst_t * testBST = bst_create();
-    bst_add(testBST, 5);
-    result = bst_sum(testBST);
-    bst_free(testBST);   
+    	int result;
+    	bst_t * testBST = bst_create();
+    	bst_add(testBST, 5);
+    	result = bst_sum(testBST);
+    	bst_free(testBST);   
 
-    if(result==5){ 
-        return 1;
-    }
-    return 0;
+    	if(result==5){ 
+        	return 1;
+    	}
+	return 0;
 }
 
-
+// test bst function
+//void test(int(*test)())
 // TODO: Add more tests here at your discretion
 int (*unitTests[])(int)={
     unitTest1,
