@@ -10,10 +10,10 @@ Discuss and answer the following questions (Make sure to elaborate and justify y
 
 ## Answers
 
-1. *edit your answer here*
-2. *edit your answer here*
-3. *edit your answer here*
-4. *edit your answer here*
+1. *A binary search tree is considered 'balanced' if for any 2 leaves the difference of the depth is at most 1.*
+2. *Balanced binary tree time complexity is O(n) time.*
+3. *yes it can exhibit o(n) time complexity. *
+4. *The recurrence relation for a binary search is T(n) = T(n/2)+1.*
 
 
 
