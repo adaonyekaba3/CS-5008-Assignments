@@ -12,7 +12,6 @@
 // smart engineers.
 #include <stdio.h>  // For IO operations
 #include <stdlib.h> // for malloc/free
-
 // Our library that we have written.
 // Also, by a really smart engineer!
 #include "my_bst.h"
@@ -31,9 +30,10 @@ int unitTest1(){
     	int result;
     	bst_t * testBST = bst_create();
     	if (testBST!=NULL){
+
 		result = 1;	
 	}else{
-		result 0;
+		result=0;
 	}
     	bst_free(testBST);
     	printf("%d\n", result);
@@ -68,12 +68,12 @@ int unitTest3(){
 }
 
 // test bst function
-//void test(int(*test)())
-// TODO: Add more tests here at your discretion
+// void test(int(*test)()){
+// TODO: Add more tests here at your discretion.
 int (*unitTests[])(int)={
     unitTest1,
     unitTest2,
-    unitTest3,
+  //  unitTest3,
     NULL
 };
 
