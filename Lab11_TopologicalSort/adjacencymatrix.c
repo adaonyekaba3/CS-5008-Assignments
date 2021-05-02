@@ -12,6 +12,13 @@
 #define ROWS 5
 #define COLUMNS 5
 
+void generateGraph();
+void printGraph();                                                               
+int nodeInDegree();
+int nodeOutDegree();
+int isConnected();
+
+
 /*  ============= Tutorial on Graph format ============
     You are given a randomly generated graph that looks 
     of the form:
@@ -32,7 +39,7 @@
     node 2:    0 1 0 1 1
     node 3:    1 0 0 0 0
     node 4:    1 0 1 1 0
-
+ 
     A '1' represents a connection to a node, and a 0
     means it is not connected.
 
@@ -54,8 +61,6 @@
     The number of connections a node has in are it's 'in-degree'
 */
 
-
-
 // This function generates a random graph
 // Note: For the purpose of this lab,
 //       we do not seed the random number generator
@@ -65,7 +70,7 @@ void generateGraph(int* g){
 
     // Uncomment the line below if you want
     // to generate a random graph each time.
-    srand(time(NULL));  
+    //srand(time(NULL));  
     int i,j;
     for(i=0; i < ROWS; i++){
         for(j=0; j < COLUMNS; j++){
@@ -96,31 +101,36 @@ void printGraph(int* g){
 int nodeInDegree(int* g, int node){
 	// taking initial count of incoming nodes - 0.
 	int i;
-	int cnt = 0;
-	for(int i=0; i <= ROWS; i++)
-	{
+	int count = 0; // for columns
+	for(int i=0; i < ROWS; i++){
 		// if there is an incoming node from i to node.
 		// increment counter.
-		if(g[i]==1) ++cnt;
+		if(g[i]==node){
+			count = count+1;
+			//printf("Count is: %d\n", count);
+		return count;
+		}
 	}
-	return cnt;
 }
 
 // Compute 'out-degree' of a node
 // For a given node 'n' in an adjacency matrix,
 // compute the out-degree.
 int nodeOutDegree(int* g, int node){
+	
 	// taking initial count of incoming nodes - 0.
-	int i;
-	int cnt = 0;
-	for(int i=0; i <= COLUMNS; i++)
+	int j; // for rows 
+	int count = 0;
+	for(int j=0; j < COLUMNS; j++)
 	{
 		// incremement count if there is an outcoming node from j
 		// to node.
-		if(g[i] == 1) ++cnt;
-		
+		if(g[j]==node){
+			count = count+1;
+			//printf("Count is: %d\n", count);
+		return count;	
+		}
 	}
-	return cnt;
 }
 
 
@@ -142,31 +152,33 @@ int isConnected(int* g, int node1, int node2){
 }
 
 int main(){
- 
+
 	int g_testgraph[ROWS][COLUMNS];
 	// Generate a random graph
-	generateGraph(&g_testgraph);
-    	// Print out the graph
-    	printGraph(&g_testgraph);
-    	// Print out the nodeInDegree of each of the
-    	// five nodes
-    	int i=0;
-    	for(i =0; i < COLUMNS; ++i){
-		printf("node %d in-degree = %d\n", i, nodeInDegree(&g_testgraph,i));
+	generateGraph(*g_testgraph);
+	// Print out the graph
+	printGraph(*g_testgraph);
+	// Print out the nodeInDegree of each of the
+ 	// five nodes
+    int i=0;
+	for(i =0; i < COLUMNS; ++i){
+		//printf("node %d in-degree = %d\n", i, nodeInDegree(&g_testgraph,i));
+		printf("node %d in-degree = %d\n", i, nodeInDegree(*g_testgraph,i));
 	}
-    	// Print out the nodeInDegree of each of the
-    	// five nodes
-    	i=0;
-    	for(i =0; i < COLUMNS; ++i){
-        	printf("node %d out-degree= %d\n",i,nodeOutDegree(&g_testgraph,i));
-    	}
-    	// Check which nodes '0' is connected to
-    	printf("Node 0 connections:");
-    	int j;
-    	for(j =0; j < COLUMNS; ++j){
-        	printf("%d ",isConnected(&g_testgraph,0,j));
-    	}
-
-    	return 0;
-
+	// Print out the nodeInDegree of each of the
+	// five nodes
+	i=0;
+	for(i =0; i < COLUMNS; ++i){
+    	//printf("node %d in-degree= %d\n",i,nodeInDegree(&g_testgraph,i));
+		printf("node %d out-degree = %d\n", i, nodeOutDegree(*g_testgraph,i));
+	}
+	
+    // Check which nodes '0' is connected to
+	printf("Node 0 connections:");
+	int j;
+	for(j =0; j < COLUMNS; ++j){
+    	printf("%d ",isConnected(*g_testgraph,0,j));
+	}
+	return 0;
 }
+
