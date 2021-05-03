@@ -123,7 +123,7 @@ int nodeOutDegree(int* g, int node){
 	int count = 0;
 	for(int j=0; j < COLUMNS; j++)
 	{
-		// incremement count if there is an outcoming node from j
+		// increment count if there is an outcoming node from j
 		// to node.
 		if(g[j]==node){
 			count = count+1;

@@ -150,8 +150,8 @@ Okay, now that you understand the data structure, you will implement two functio
 
 Your answers here:
 
-1. *edit your response*
-2. *edit your response*
+1. *For adjacency matrix, space complexity in Big-O is O(V).*
+2. *By definition, it will never make sense for ROWS != COLUMNS in an adjacency matrix since it is a square matrix with [ROWS][COLUMNS].*
 
 
 ## Compiling and running the program.
@@ -203,9 +203,9 @@ eat exercise
 
 Your answer:
 
-1. *edit your response*
-2. *edit your response*
-3. *edit your response*
+1. *Topological Sorting for a graph is not possible if the graph is not a DAG. Because Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge u v, vertex u comes before v in the ordering, and it is impossible to sort edge without any direction.*
+2. *topological sort can only be applied to DAGs. It is impossible to run a topological sort on a directed graph with a cycle, since it is unclear where the sort itself should start.*
+3. *Depth First Traversal can be used to detect a cycle in a Graph. DFS for a connected graph produces a tree. There is a cycle in a graph only if there is a back edge present in the graph. A back edge is an edge that is joining a node to itself (self-loop) or one of its ancestor in the tree produced by DFS.*
 
 
 # Deliverable
