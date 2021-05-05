@@ -9,10 +9,10 @@ Discuss and answer the following questions (Make sure to elaborate and justify y
 
 ## Answers
 
-1. *edit your answer here*
-2. *edit your answer here*
-3. *edit your answer here*
-4. *edit your answer here*
+1. *big-O complexity of adjacency list is O(V+E).*
+2. *big-O complexity of adjacency matrix is O(n^2).*
+3. *DFS complexity is O ( V + E ) O(V + E) O(V+E).*
+4. *BFS complexity is O(V + E) O(V + E) O(V+E) since every vertex and every edge will be checked once.*
 
 
 ## Interview Prep (Optional +1% Bonus on assignment)
